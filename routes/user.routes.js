@@ -6,9 +6,9 @@ const router = Router()
 
 router
     .get('/', userController.getAll)
-    .get('/:id', userController.getOne)
+    .get('/:id', userController.getOneUserById)
     .post('/', userController.createNewUser)
-    .put('/:id', userController.renameUser)
+    .put('/', userController.renameUser)
     .delete('/:id', userController.deleteById)
 
 export default router

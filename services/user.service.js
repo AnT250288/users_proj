@@ -10,17 +10,20 @@ class UserService {
     }
 
     getOneUser = (id) => {
-
-        return data.find(el => el.id === id)
+        console.log(data.find(el => el.id === id))
+        return JSON.stringify(data.find(el => el.id === id))
     }
 
     createUser = (id, name) => {
-        return data.push({id: id, name: name})
-        /*return [...data, {id: id, name: name}]*/
+        data.push({id, name})
+        /*[...data, {id, name}]*/
+        console.log(id, name)
+        return JSON.stringify({id, name})
     }
 
     changeName = (id, name) => {
-        return JSON.stringify(data.map(el => el.id === id ? [...el, name] : el))
+        console.log(id, name)
+        return JSON.stringify(data.map(el => el.id === id ? [...data, name] : el))
     }
     removeUser = (id) => {
         return JSON.stringify(data.filter(el => el.id != id))
@@ -29,6 +32,6 @@ class UserService {
 }
 
 let userService = new UserService()
-userService.getAllUsers()
+userService.createUser(8, 'cjsjc')
 
 export let service = new UserService()

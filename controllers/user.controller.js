@@ -7,31 +7,24 @@ class UserController {
             .status(200)
             .send(service.getAllUsers())
     }
-    getOne = (request, response) => {
-
+    getOneUserById = (request, response) => {
         response
             .status(200)
             .send(service.getOneUser(request.params.id))
     }
     createNewUser = (request, response) => {
-        let body = ''
+        const {id, name} = request.params
+        const newUser = service.createUser(id, name)
         response
             .status(200)
-            .send(service.createUser(request)
-
+            .send(newUser)
     }
     renameUser = (request, response) => {
-        let user = ''
+        const {id, name} = request.params
+        const updatedUser = service.changeName(id, name)
         response
             .status(200)
-            .send(service.changeName(request
-                .on('data', chunk => {
-                    user += chunk
-                })
-                .on('end', () => {
-                    data = JSON.parse(user)
-                })
-            ))
+            .send(updatedUser)
     }
     deleteById = (req, res) => {
         res
