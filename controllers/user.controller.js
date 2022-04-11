@@ -22,13 +22,7 @@ class UserController {
                 .status(200)
                 .send(service.createUser(body))
         })
-        //console.log(request.body)
-        /* service.createUser(request.query)
 
-         response
-             .status(200)
-             /!*.send(service.createUser(id, name))*!/
-             .send("was created")*/
     }
 
     renameUser = (request, response) => {
@@ -42,12 +36,7 @@ class UserController {
                 .send(service.changeName(request.params.id, body))
         })
 
-        /*const {id, name} = JSON.parse(request.body)
-        console.log(request.body)
-        const updatedUser = service.changeName(id, name)
-        response
-            .status(200)
-            .send(updatedUser)*/
+
     }
 
 
