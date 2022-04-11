@@ -4,7 +4,14 @@ import express from "express";
 
 const app = express()
 
-app.use('/', serverRoutes)
+app.use('/user', serverRoutes)
+app.use(express.json())
+app.use(express.urlencoded({extended: true}))
+
+
+app.use(function (request, response, next) {
+    response.status(404).send("Not found")
+})
 
 
 app.listen(3000, () => {
