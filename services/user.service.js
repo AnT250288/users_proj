@@ -1,37 +1,50 @@
-import {users} from "../users.js";
-
-let data = users
+import {User} from "../users.js";
 
 class UserService {
 
     getAllUsers = () => {
-        console.log(JSON.stringify(data))
-        return data
+        /*console.log(JSON.stringify(User))*/
+        let user = User.findAll()
+        return user
     }
 
     getOneUser = (id) => {
-        return data.find(el => el.id === id)
+        return User.findByPk(id)
     }
 
-    createUser = (user) => {
-        data.push(user)
-        return JSON.stringify(data)
-    }
+    /*createUser = (name, age) => {
+        User.create({
+            name, age
+        })
+    }*/
 
     changeName = (id, name) => {
-        for (let i in data) {
-            if (data[i].id == id) {
+        /*for (let i in User) {
+            if (User[i].id == id) {
                 console.log(i.name)
-                data[i] = name
+                User[i] = name
             }
         }
-        return JSON.stringify(data)
-        /*return JSON.stringify(data.map(el => el.id === id ? [...data, name] : el))*/
+        return JSON.stringify(User)*/
+        return User.update({
+            where: {
+                id: id
+            }
+        })
     }
 
     removeUser = (id) => {
-        return data = JSON.stringify(data.filter(el => el.id != id))
+        return User.destroy({
+            where: {
+                id: id
+            }
+        })
     }
 }
+
+const userServ = new UserService()
+/*userServ.createUser()*/
+/*userServ.removeUser(4)*/
+
 
 export let service = new UserService()

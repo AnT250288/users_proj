@@ -1,38 +1,63 @@
 import {service} from "../services/user.service.js";
+import {User} from "../users.js";
 
 class UserController {
     getAll = (request, response) => {
-        response
+        service.getAllUsers().then(users => response.json(users))
+        /* response
             .status(200)
-            .send(service.getAllUsers())
+            .send(service.getAllUsers())*/
     }
     getOneUserById = (request, response) => {
-        response
-            .status(200)
-            .send(service.getOneUser(request.params.id))
+        service.getOneUser(request.params.id)
+            .then(user => {
+                if (!user) {
+                    return `There is no user with that ${request.params.id}`
+                } else {
+                    response.json(user)
+                }
+            }).catch(err => console.log(err))
     }
 
     createNewUser = (request, response) => {
+        /*let body
+        request.on('data', res => {
+            body = JSON.parse(res)
+        })
+         request.on('end', () => {
+             response
+                 .status(200)
+                 .send(service.createUser(body))
+         })*/
         let body
         request.on('data', res => {
             body = JSON.parse(res)
         })
-        request.on('end', () => {
-            response
-                .status(200)
-                .send(service.createUser(body))
-        })
-        //console.log(request.body)
-        /* service.createUser(request.query)
+        User.create({body})
+            .then(res => {
+            response.send(body = {id: res.id, name: res.name, age: res.age})
+            console.log(body);
+        }).catch(err => console.log(err))
+        /*let {id, name, age} = request.body
+        User.create({id, name, age})
+            .then((user) => {
+                return response
+                    .status(200)
+                    .json(user)
+            })*/
+        /*return User.create({name: request.body.name, age: request.body.age})
+            .then(user => response.status(200).send(user))*/
 
-         response
-             .status(200)
-             /!*.send(service.createUser(id, name))*!/
-             .send("was created")*/
+
+        /*.then(res => {
+            const user = {id: res.id, name: res.name, age: res.age}
+            console.log(user);
+        }).catch(err => console.log(err));*/
+
     }
 
     renameUser = (request, response) => {
-        let body
+        /*let body
         request.on('data', response => {
             body = JSON.parse(response)
         })
@@ -40,21 +65,17 @@ class UserController {
             response
                 .status(200)
                 .send(service.changeName(request.params.id, body))
-        })
+        })*/
+        const id = request.params.id
+        response.send(service.changeName(id))
 
-        /*const {id, name} = JSON.parse(request.body)
-        console.log(request.body)
-        const updatedUser = service.changeName(id, name)
-        response
-            .status(200)
-            .send(updatedUser)*/
     }
-
 
     deleteById = (request, response) => {
         response
             .status(200)
             .send(service.removeUser(request.params.id))
+            .send("User was deleted")
     }
 
 }
