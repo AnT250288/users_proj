@@ -3,32 +3,27 @@ import {User} from "../users.js";
 class UserService {
 
     getAllUsers = () => {
-        /*console.log(JSON.stringify(User))*/
-        let user = User.findAll()
+        let user = User.findAll({
+            attributes: ["id", 'name', 'age']
+        })
         return user
     }
 
     getOneUser = (id) => {
-        return User.findByPk(id)
+        return User.findByPk(id, {attributes: ["id", 'name', 'age']})
     }
 
-    /*createUser = (name, age) => {
-        User.create({
-            name, age
+    createUser = (user) => {
+        User.create(user, {
+            name: user.name,
+            age: user.age,
         })
-    }*/
+    }
 
-    changeName = (id, name) => {
-        /*for (let i in User) {
-            if (User[i].id == id) {
-                console.log(i.name)
-                User[i] = name
-            }
-        }
-        return JSON.stringify(User)*/
-        return User.update({
+    changeName = (user, key) => {
+        return User.update(user, {
             where: {
-                id: id
+                id: key
             }
         })
     }
@@ -43,8 +38,5 @@ class UserService {
 }
 
 const userServ = new UserService()
-/*userServ.createUser()*/
-/*userServ.removeUser(4)*/
-
 
 export let service = new UserService()

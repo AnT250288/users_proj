@@ -5,11 +5,10 @@ import bodyParser from "body-parser";
 
 const app = express()
 
-
-app.use('/user', serverRoutes)
 app.use(express.json())
 app.use(bodyParser.json())
 app.use(express.urlencoded({extended: true}))
+app.use('/user', serverRoutes)
 
 
 app.use(function (request, response, next) {
