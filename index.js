@@ -1,12 +1,14 @@
 import serverRoutes from "./routes/user.routes.js";
 import express from "express";
 import {sequelize} from "./connections/connection.js";
+import bodyParser from "body-parser";
 
 const app = express()
 
 
 app.use('/user', serverRoutes)
 app.use(express.json())
+app.use(bodyParser.json())
 app.use(express.urlencoded({extended: true}))
 
 

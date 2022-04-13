@@ -1,5 +1,6 @@
 import {service} from "../services/user.service.js";
 import {User} from "../users.js";
+import bodyParser from "body-parser";
 
 class UserController {
     getAll = (request, response) => {
@@ -29,15 +30,26 @@ class UserController {
                  .status(200)
                  .send(service.createUser(body))
          })*/
-        let body
-        request.on('data', res => {
-            body = JSON.parse(res)
-        })
-        User.create({body})
+        /*  let body
+          request.on('data', res => {
+              body = JSON.parse(res)
+          })
+          console.log(body)*/
+        console.log(request)
+        User.create({
+            name: request.body.name,
+            age: request.body.age
+        }).then(res => {
+            const user = {id: res.id, name: res.name, age: res.age}
+            console.log(user);
+        }).catch(err => console.log(err));
+
+
+        /*User.create({name: request.body.name, age: request.body.age})
             .then(res => {
-            response.send(body = {id: res.id, name: res.name, age: res.age})
-            console.log(body);
-        }).catch(err => console.log(err))
+                response.send({name: res.name, age: res.age})
+            })*/
+
         /*let {id, name, age} = request.body
         User.create({id, name, age})
             .then((user) => {
@@ -80,4 +92,5 @@ class UserController {
 
 }
 
-export let userController = new UserController()
+export let
+    userController = new UserController()
