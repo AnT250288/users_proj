@@ -1,5 +1,5 @@
 import Sequelize from "sequelize";
-import {sequelize} from "./connections/connection.js";
+import {sequelize} from "../connections/connection.js";
 
 export const User = sequelize.define('users', {
     id: {
@@ -15,6 +15,16 @@ export const User = sequelize.define('users', {
     age: {
         type: Sequelize.INTEGER,
         allowNull: false
+    },
+    email: {
+        type: Sequelize.STRING,
+        allowNull: false
+    },
+    password: {
+        type: Sequelize.STRING,
+        allowNull: false
     }
 })
+
+
 
