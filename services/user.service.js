@@ -31,6 +31,7 @@ class UserService {
     }
 
     changeName = (user, key) => {
+        user.password = bcrypt.hashSync(user.password, 4)
         User.update(user, {
             where: {id: key}
         })
@@ -51,7 +52,7 @@ class UserService {
             id,
             email,
         }
-        return jwt.sign(payload, secret, {expiresIn: 24})
+        return jwt.sign(payload, secret, {expiresIn: '24h'})
     }
 
 }

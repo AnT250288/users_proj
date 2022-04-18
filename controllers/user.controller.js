@@ -1,9 +1,4 @@
 import {service} from "../services/user.service.js";
-import bcrypt from "bcrypt"
-import {User} from "../model/users.js";
-import jwt from "jsonwebtoken";
-import {secret} from "../config.js";
-
 
 class UserController {
     getAll = (request, response) => {
