@@ -1,6 +1,5 @@
 import {User} from "../model/users.js";
 import jwt from "jsonwebtoken";
-import {secret} from "../config.js";
 import bcrypt from "bcrypt";
 
 class UserService {
@@ -52,7 +51,7 @@ class UserService {
             id,
             email,
         }
-        return jwt.sign(payload, secret, {expiresIn: '24h'})
+        return jwt.sign(payload, "secret", {expiresIn: '24h'})
     }
 
 }
