@@ -9,12 +9,12 @@ const router = Router()
 router
     .get('/', userController.getAll)
     .get('/:id', userController.getOneUserById)
-    .post('/', uploadFile, validate(), userController.createNewUser)
+    .post('/', validate(), userController.createNewUser)
     .put('/:id', authenticateToken, validate(), userController.renameUser)
     .delete('/:id', authenticateToken, userController.deleteById)
     .post('/registration', userController.registrationUser)
     .post('/login', userController.loginUser)
-    .post('/upload', uploadFile)
+    .post('/upload', uploadFile, userController.uploadedFile)
 
 
 export default router

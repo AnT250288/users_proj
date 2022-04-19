@@ -5,6 +5,16 @@ class UserController {
         service.getAllUsers().then(users => response.json(users))
     }
 
+    uploadedFile = (request, response) => {
+        debugger
+        let fileData = request.file.path
+        if (!fileData) {
+            response.send("Error with downloading file")
+        } else {
+            response.send("File downloaded!")
+        }
+    }
+
     getOneUserById = (request, response) => {
         service.getOneUser(request.params.id)
             .then(user => {
