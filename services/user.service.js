@@ -19,7 +19,7 @@ class UserService {
     })
 
     createUser = (user) => {
-        user.password = bcrypt.hashSync(user.password, 4)
+        user.password = bcrypt.hashSync(user.password, bcrypt.genSaltSync())
         User.create(user, {
             id: user.id,
             name: user.name,
@@ -30,7 +30,7 @@ class UserService {
     }
 
     changeName = (user, key) => {
-        user.password = bcrypt.hashSync(user.password, 4)
+        user.password = bcrypt.hashSync(user.password, bcrypt.genSaltSync())
         User.update(user, {
             where: {id: key}
         })

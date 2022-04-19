@@ -65,3 +65,4 @@ class UserController {
 }
 
 export let userController = new UserController()
+
