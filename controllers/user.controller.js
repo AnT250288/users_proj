@@ -6,12 +6,6 @@ class UserController {
     }
 
     uploadedFile = async (request, response, next) => {
-        /*let fileData = request.file.path
-        if (!fileData) {
-            response.send("Error with downloading file")
-        } else {
-            response.send("File downloaded!")
-        }*/
         const file = request.file
         if (!file) {
             const error = new Error('Please upload a file')
@@ -39,10 +33,6 @@ class UserController {
         service.createUser(request.body)
         response.send("User was created!")
     }
-
-    /*renameUser = (request, response) => {
-       response.send(service.changeName(request.body, request.body._id, request.body.name, request.body.login, request.body.password))
-   }*/
 
     renameUser = async (request, response) => {
         let result = await service.changeName(request.params.id, {
