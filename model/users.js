@@ -1,4 +1,4 @@
-import Sequelize from "sequelize";
+/*import Sequelize from "sequelize";
 import {sequelize} from "../connections/connection.js";
 
 export const User = sequelize.define('users', {
@@ -24,7 +24,14 @@ export const User = sequelize.define('users', {
         type: Sequelize.STRING,
         allowNull: false
     }
-})
+})*/
 
+import mongoose from "mongoose";
 
+const userSchema = new mongoose.Schema({
+    name: String,
+    login: String,
+    password: String
+}, {versionKey: false})
 
+export const User = mongoose.model('Users', userSchema)

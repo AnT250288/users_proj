@@ -9,7 +9,7 @@ const router = Router()
 router
     .get('/', userController.getAll)
     .get('/:id', userController.getOneUserById)
-    .post('/', validate(), userController.createNewUser)
+    .post('/' ,validate(), userController.createNewUser)
     .put('/:id', authenticateToken, validate(), userController.renameUser)
     .delete('/:id', authenticateToken, userController.deleteById)
     .post('/registration', userController.registrationUser)

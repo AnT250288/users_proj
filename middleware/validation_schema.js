@@ -1,10 +1,12 @@
 import Joi from "joi"
 
 const validateSchema = Joi.object({
-    email: Joi.string().min(3).max(20).required(),
+    /*
+        email: Joi.string().min(3).max(20).required(),
+    */
+    login: Joi.string().min(3).max(20).required(),
     password: Joi.string().alphanum(),
     name: Joi.string().pattern(new RegExp('^[a-zA-Z]{3,50}$')),
-    age: Joi.number(),
     id: Joi.number(),
 })
 

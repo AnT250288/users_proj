@@ -5,14 +5,21 @@ class UserController {
         service.getAllUsers().then(users => response.json(users))
     }
 
-    uploadedFile = (request, response) => {
-        debugger
-        let fileData = request.file.path
+    uploadedFile = async (request, response, next) => {
+        /*let fileData = request.file.path
         if (!fileData) {
             response.send("Error with downloading file")
         } else {
             response.send("File downloaded!")
+        }*/
+        const file = request.file
+        if (!file) {
+            const error = new Error('Please upload a file')
+            error.httpStatusCode = 400
+            return next("hey error")
         }
+
+        response.json("Image was added")
     }
 
     getOneUserById = (request, response) => {
@@ -33,17 +40,29 @@ class UserController {
         response.send("User was created!")
     }
 
-    renameUser = (request, response) => {
-        response.send(service.changeName(request.body, request.body.id, request.body.email, request.body.password))
+    /*renameUser = (request, response) => {
+       response.send(service.changeName(request.body, request.body._id, request.body.name, request.body.login, request.body.password))
+   }*/
+
+    renameUser = async (request, response) => {
+        let result = await service.changeName(request.params.id, {
+            name: request.body.name,
+            login: request.body.login,
+            password: request.body.password
+        })
+        if (result)
+            response.status(200).json({message: `User with id: ${request.params.id} updated`});
+        else
+            response.status(400).json({message: `No user with such key ${request.params.id}`});
     }
 
-    deleteById = (request, response) => {
-        response.send(service.removeUser(request.params.id))
+    deleteById = async (request, response) => {
+        response.send(await service.removeUser(request.params.id))
     }
 
     async registrationUser(request, response) {
-        const {email} = request.body
-        const alreadyExist = await service.getByEmail(email).catch(
+        const {login} = request.body
+        const alreadyExist = await service.getByLogin(login).catch(
             (error) => {
                 console.log(error)
             }
@@ -57,19 +76,19 @@ class UserController {
     }
 
     async loginUser(request, response) {
-        const {id, email, password} = request.body
-        const user = await service.getByEmail(email).catch(
+        const {id, login, password} = request.body
+        const user = await service.getByLogin(login).catch(
             (error) => {
                 console.log(error)
             }
         )
-        console.log(request.body.email)
+        console.log(request.body.login)
         if (!user)
-            return response.json("Email or password doesn't match!")
+            return response.json("Login or password doesn't match!")
 
         if (user.password !== password)
             return response.json("Password doesn't match!")
-        const jwtToken = await service.generateAccessToken(id, email)
+        const jwtToken = await service.generateAccessToken(id, login)
         response.json({message: "Welcome back", token: jwtToken})
     }
 }

@@ -21,6 +21,7 @@
     "joi": "^17.6.0",
     "jsonwebtoken": "^8.5.1",
     "lowdb": "^3.0.0",
+    "mongoose": "^6.3.0",
     "multer": "^1.4.4",
     "mysql2": "^2.3.3",
     "nodemon": "^2.0.15",

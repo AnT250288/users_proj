@@ -20,4 +20,3 @@ export const uploadFile = multer({storage: storageConfig}).single('JS')
         cb(null, false);
     }
 }*/
-
